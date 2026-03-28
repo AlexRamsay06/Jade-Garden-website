@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jade Garden | Authentic Chinese Cuisine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;500&family=Noto+Serif+SC:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --jade:        #a4451f; 
+      --jade-light:  #c0392b;
+      --jade-pale:   #f5c6cb;
+      --gold:        #c9a84c;
+      --gold-light:  #e8c97a;
+      --cream:       #faf6f0;
+      --ink:         #1a1010;
+      --ink-soft:    #3b2a2a;
+      --red:         #6b1020;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(26,26,24,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+      transition: padding .3s;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--gold);
+      letter-spacing: .08em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .95rem;
+      font-weight: 400;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      background: var(--ink);
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(155,35,53,0.28) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 80% 60%, rgba(107,16,32,0.18) 0%, transparent 60%),
+        linear-gradient(160deg, #1a1010 0%, #2a0a0a 50%, #1a1010 100%);
+    }
+
+    /* Decorative Chinese-style rings */
+    .hero-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.12);
+      animation: slowSpin 40s linear infinite;
+    }
+    .hero-ring-1 { width: 700px; height: 700px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .hero-ring-2 { width: 550px; height: 550px; top: 50%; left: 50%; transform: translate(-50%,-50%); border-color: rgba(201,168,76,0.08); animation-duration: 30s; animation-direction: reverse; }
+    .hero-ring-3 { width: 900px; height: 900px; top: 50%; left: 50%; transform: translate(-50%,-50%); border-color: rgba(155,35,53,0.15); animation-duration: 60s; }
+
+    @keyframes slowSpin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    /* Corner ornaments */
+    .ornament {
+      position: absolute;
+      width: 120px; height: 120px;
+      opacity: 0.35;
+    }
+    .ornament svg { width: 100%; height: 100%; }
+    .orn-tl { top: 80px; left: 40px; }
+    .orn-tr { top: 80px; right: 40px; transform: scaleX(-1); }
+    .orn-bl { bottom: 40px; left: 40px; transform: scaleY(-1); }
+    .orn-br { bottom: 40px; right: 40px; transform: scale(-1,-1); }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      animation: fadeUp .9s ease both;
+    }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+
+    .hero-eyebrow {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: .85;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.0;
+      letter-spacing: .01em;
+    }
+    .hero-title span { color: var(--gold); font-style: italic; }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: rgba(250,246,240,0.55);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-top: .8rem;
+      margin-bottom: 2.5rem;
+    }
+    .hero-divider {
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-buttons { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-block;
+      padding: .85rem 2.4rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 0;
+      cursor: pointer;
+      transition: all .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.08);
+      transform: translateX(-100%);
+      transition: transform .3s ease;
+    }
+    .btn:hover::before { transform: translateX(0); }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--ink);
+      border: 1px solid var(--gold);
+    }
+    .btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(250,246,240,0.4);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      animation: fadeUp 1.2s .4s ease both;
+    }
+    .scroll-hint span {
+      font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(250,246,240,0.35);
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(180deg, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.15)} }
+
+    /* ── SECTION BASE ── */
+    section { position: relative; }
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    .section-tag {
+      font-family: 'Noto Serif SC', serif;
+      font-size: .8rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: .75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.1;
+      font-weight: 700;
+    }
+    .section-rule {
+      width: 60px; height: 2px;
+      background: var(--jade);
+      margin: 1.5rem 0 2rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 120px 0;
+      background: var(--cream);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+    }
+    .about-image-frame {
+      position: relative;
+      background: var(--jade);
+      padding: 1.5rem;
+    }
+    .about-image-frame::before {
+      content: '';
+      position: absolute;
+      top: -15px; left: -15px; right: 15px; bottom: 15px;
+      border: 1px solid var(--gold);
+      z-index: 0;
+    }
+    .about-img-inner {
+      position: relative; z-index: 1;
+      width: 100%;
+      height: 420px;
+      background:
+        linear-gradient(135deg, #3a1010 0%, #9b2335 40%, #7a1c2a 70%, #2e0a0a 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .about-img-pattern {
+      position: absolute; inset: 0;
+      opacity: 0.15;
+      background-image:
+        repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+      background-size: 20px 20px;
+    }
+    .about-img-emblem {
+      position: relative; z-index: 2;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7rem;
+      color: rgba(201,168,76,0.5);
+      line-height: 1;
+      user-select: none;
+    }
+    .about-accent-badge {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 110px; height: 110px;
+      background: var(--red);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 3;
+    }
+    .about-accent-badge span:first-child {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .about-accent-badge span:last-child {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .about-text .section-title { color: var(--ink); }
+    .about-text p {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--ink-soft);
+      margin-bottom: 1.2rem;
+    }
+    .about-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .8rem;
+      margin-top: 2rem;
+    }
+    .about-feature {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .9rem;
+      letter-spacing: .05em;
+      color: var(--ink-soft);
+    }
+    .about-feature::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: .7rem;
+    }
+
+    /* ── MENU SHOWCASE ── */
+    #menu {
+      padding: 120px 0;
+      background: var(--ink);
+      overflow: hidden;
+    }
+    #menu .section-tag,
+    #menu .section-title { color: var(--cream); }
+    #menu .section-title span { color: var(--gold); }
+    #menu .section-rule { background: var(--gold); }
+
+    .menu-header { text-align: center; margin-bottom: 4rem; }
+    .menu-header .section-rule { margin: 1.5rem auto 2rem; }
+    .menu-header p {
+      font-size: 1.1rem;
+      color: rgba(250,246,240,0.55);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .menu-categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      margin-bottom: 3rem;
+    }
+    .menu-cat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,168,76,0.12);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: background .25s, border-color .25s;
+      cursor: default;
+    }
+    .menu-cat:hover {
+      background: rgba(155,35,53,0.2);
+      border-color: rgba(201,168,76,0.35);
+    }
+    .menu-cat-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .menu-cat h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      margin-bottom: .5rem;
+    }
+    .menu-cat p {
+      font-size: .85rem;
+      letter-spacing: .08em;
+      color: rgba(250,246,240,0.4);
+      text-transform: uppercase;
+    }
+
+    .menu-cta { text-align: center; }
+    .menu-cta .btn-gold { padding: 1.1rem 3.5rem; font-size: 1.05rem; }
+
+    /* ── ORDER ── */
+    #order {
+      padding: 100px 0;
+      background:
+        linear-gradient(135deg, rgba(155,35,53,0.95) 0%, rgba(80,15,25,0.98) 100%),
+        var(--ink);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #order::before {
+      content: '玉';
+      position: absolute;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 30rem;
+      color: rgba(255,255,255,0.03);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      user-select: none;
+      pointer-events: none;
+    }
+    #order .section-tag { color: var(--gold-light); }
+    #order .section-title { color: var(--cream); margin-bottom: 1rem; }
+    #order .section-rule { margin: 1.5rem auto; background: rgba(250,246,240,0.3); }
+    #order p {
+      font-size: 1.15rem;
+      color: rgba(250,246,240,0.65);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+    }
+    #order .btn-gold { padding: 1.1rem 3.5rem; font-size: 1.1rem; }
+    .order-note {
+      margin-top: 1.5rem;
+      font-size: .82rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.3);
+    }
+
+    /* ── HOURS / INFO ── */
+    #info {
+      padding: 100px 0;
+      background: var(--cream);
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+    .info-block {
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(45,106,79,0.15);
+      transition: border-color .25s;
+    }
+    .info-block:hover { border-color: var(--jade-light); }
+    .info-block-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .info-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .info-block p, .info-block address {
+      font-style: normal;
+      font-size: 1rem;
+      color: var(--ink-soft);
+      line-height: 1.75;
+    }
+    .hours-row {
+      display: flex; justify-content: space-between;
+      font-size: .9rem;
+      padding: .2rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { color: var(--ink-soft); }
+    .hours-time { color: var(--jade); font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 3rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+    }
+    .footer-sub {
+      font-size: .8rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.3);
+      margin-top: .2rem;
+    }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a {
+      font-size: .85rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.45);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy {
+      font-size: .8rem;
+      color: rgba(250,246,240,0.2);
+      letter-spacing: .05em;
+    }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      .nav-links { gap: 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .menu-categories { grid-template-columns: 1fr 1fr; }
+      .info-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+      footer { flex-direction: column; text-align: center; padding: 2.5rem 2rem; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .menu-categories { grid-template-columns: 1fr; }
+      .about-features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Jade Garden</a>
+    <ul class="nav-links">
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#info">Hours</a></li>
+      <li><a href="#order">Order Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-ring hero-ring-1"></div>
+    <div class="hero-ring hero-ring-2"></div>
+    <div class="hero-ring hero-ring-3"></div>
+
+    <!-- Corner ornaments (simple SVG brush strokes) -->
+    <div class="ornament orn-tl">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 90 L10 10 L90 10" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+        <path d="M10 10 L30 30" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".5"/>
+        <circle cx="10" cy="10" r="3" fill="#c9a84c" opacity=".6"/>
+      </svg>
+    </div>
+    <div class="ornament orn-tr">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 90 L10 10 L90 10" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+        <path d="M10 10 L30 30" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".5"/>
+        <circle cx="10" cy="10" r="3" fill="#c9a84c" opacity=".6"/>
+      </svg>
+    </div>
+    <div class="ornament orn-bl">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 90 L10 10 L90 10" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+        <path d="M10 10 L30 30" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".5"/>
+        <circle cx="10" cy="10" r="3" fill="#c9a84c" opacity=".6"/>
+      </svg>
+    </div>
+    <div class="ornament orn-br">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 90 L10 10 L90 10" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+        <path d="M10 10 L30 30" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".5"/>
+        <circle cx="10" cy="10" r="3" fill="#c9a84c" opacity=".6"/>
+      </svg>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">玉园 · Since 2004</p>
+      <h1 class="hero-title">Jade<br><span>Garden</span></h1>
+      <p class="hero-subtitle">Classic Chinese-American Cuisine</p>
+      <div class="hero-divider"></div>
+      <div class="hero-buttons">
+        <a href="#menu" class="btn btn-outline">View Menu</a>
+        <a href="https://www.doordash.com/store/jade-garden-sayville-2814445/69599763/" target="_blank" class="btn btn-gold">Order Online</a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Discover</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-image-wrap reveal">
+          <div class="about-image-frame">
+            <div class="about-img-inner">
+              <img
+                src="https://lh5.googleusercontent.com/p/AF1QipOBWkcHEGtNoTvjVdLnwL847TQtSYpF5wHcjuIJ=s1024"
+                alt="Jade Garden Restaurant"
+                class="about-custom-img"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              />
+              <!--div class="about-img-placeholder">
+                <div class="about-img-pattern"></div>
+                <div class="about-img-emblem">玉</div-->
+              </div>
+            </div>
+            <div class="about-accent-badge">
+              <span>20+</span>
+              <span>Years</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-text reveal">
+          <span class="section-tag">Our Story</span>
+          <h2 class="section-title">About Us</h2>
+          <div class="section-rule"></div>
+          <p>
+            "Jade Garden is a family-owned, local favorite for classic 
+            Chinese-American cuisine, offering flavorful dishes, generous portions, 
+            and friendly service. Dine in, take out, or enjoy convenient delivery 
+            from this longtime neighborhood staple."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU SHOWCASE -->
+  <section id="menu">
+    <div class="section-inner">
+      <div class="menu-header reveal">
+        <span class="section-tag">What We Serve</span>
+        <h2 class="section-title">Explore Our <span>Menu</span></h2>
+        <div class="section-rule"></div>
+        <p>a full menu awaits.</p>
+        <a href="https://www.doordash.com/store/jade-garden-sayville-2814445/69599763/" target="_blank" class="btn btn-gold">View Full Menu &amp; Order</a>
+      </div>
+
+      <div class="menu-categories reveal">
+        <div class="menu-cat">
+          <span class="menu-cat-icon">🥟</span>
+          <h3>Dim Sum &amp; Appetizers</h3>
+        </div>
+        <div class="menu-cat">
+          <span class="menu-cat-icon">🍜</span>
+          <h3>Noodles &amp; Rice</h3>
+        </div>
+        <div class="menu-cat">
+          <span class="menu-cat-icon">🥩</span>
+          <h3>Beef &amp; Pork</h3>
+        </div>
+        <div class="menu-cat">
+          <span class="menu-cat-icon">🍗</span>
+          <h3>Chicken &amp; Duck</h3>
+        </div>
+        <div class="menu-cat">
+          <span class="menu-cat-icon">🦐</span>
+          <h3>Seafood</h3>
+        </div>
+        <div class="menu-cat">
+          <span class="menu-cat-icon">🥦</span>
+          <h3>Vegetable &amp; Tofu</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER CTA -->
+  <section id="order">
+    <div class="section-inner">
+      <span class="section-tag reveal">Skip the Wait</span>
+      <h2 class="section-title reveal">Order Online,<br>Pick Up Fresh</h2>
+      <div class="section-rule reveal" style="margin:1.5rem auto;"></div>
+      <p class="reveal">
+        Place your order directly through Doordash - or 
+        have it delivered to your doorstep.
+      </p>
+      <div class="reveal">
+        <a href="https://www.doordash.com/store/jade-garden-sayville-2814445/69599763/" target="_blank" class="btn btn-gold">Order Now via DoorDash</a>
+        <p class="order-note">Powered by DoorDash · Secure Checkout · No Extra Fees</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS & INFO -->
+  <section id="info">
+    <div class="section-inner">
+      <div style="text-align:center; margin-bottom: 3.5rem;" class="reveal">
+        <span class="section-tag">Find Us</span>
+        <h2 class="section-title">Hours &amp; Location</h2>
+        <div class="section-rule" style="margin: 1.5rem auto;"></div>
+      </div>
+      <div class="info-grid">
+        <div class="info-block reveal">
+          <span class="info-block-icon">🕐</span>
+          <h3>Hours</h3>
+          <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">11:00AM – 9:30PM</span></div>
+          <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">Closed</span></div>
+          <div class="hours-row"><span class="hours-day">Wednesday - Thursday</span><span class="hours-time">11:00AM – 9:30PM</span></div>
+          <div class="hours-row"><span class="hours-day">Friday - Saturday</span><span class="hours-time">11:00AM – 10:30PM</span></div>
+          <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">12:00PM – 9:30PM</span></div>
+        </div>
+        <div class="info-block reveal">
+          <span class="info-block-icon">📍</span>
+          <h3>Location</h3>
+          <address>
+            113 Main Street<br>
+            Upton, MA, 01568<br><br>
+            <a href="tel:+15085296288" style="color:var(--jade); text-decoration:none;">(508) 529-6288</a>
+          </address>
+        </div>
+        <div class="info-block reveal">
+          <span class="info-block-icon">🍽️</span>
+          <h3>We Offer</h3>
+          <p>
+            Dine-In<br>
+            Takeout<br>
+            Online Ordering<br>
+            Parking Available<br>
+            Wheelchair Accessible
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-logo">Jade Garden</div>
+      <div class="footer-sub">Authentic Chinese Cuisine · Est. 2004</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#info">Hours</a></li>
+      <li><a href="https://www.doordash.com/store/jade-garden-sayville-2814445/69599763/" target="_blank">Order Online</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Jade Garden. All rights reserved.</div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Nav shrink on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.padding = window.scrollY > 60 ? '.8rem 4rem' : '1.2rem 4rem';
+    });
+  </script>
+</body>
+</html>
